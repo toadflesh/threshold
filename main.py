@@ -9,7 +9,10 @@ def main():
     elif val == "tx len error":
         print("ERROR: invalid txid\nUSAGE: uv run main.py <txid>")
         sys.exit(1)
+    elif val[:10] == "HTTP ERROR":
+        print(val)
     else:
+        print(val)
         sys.exit(0)
 
 

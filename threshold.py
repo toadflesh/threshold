@@ -6,12 +6,15 @@ def init(args):
     txid: str = args[1]
     if len(txid) != 64:
         return "tx len error"
-    get_destination_addresses(txid)
+    return get_destination_addresses(txid)
 
 def get_destination_addresses(txid: str):
     mempool_tx_endpoint = 'https://mempool.space/api/tx/'
     url = f'{mempool_tx_endpoint}{txid}'
     response = requests.get(url) 
+
+    if response.status_code > 200:
+        return f"HTTP ERROR : {response.status_code}"
     data = response.json()
 
     witness_data: list =[{}]
@@ -41,4 +44,4 @@ def get_destination_addresses(txid: str):
                 print(f'threshold_deposit: {d['scriptpubkey_address']}\ndestination_address: 0x{poss_addr[:40]}\n')
             else:
                 continue
-    return "good"
+    return "SUCCESS -> EXITING..."
